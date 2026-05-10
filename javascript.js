@@ -7,4 +7,3 @@ function getHumanChoice(){
 	const choice = prompt("Write your choice: ").toUpperCase();
 	return choice;
 }
-`
