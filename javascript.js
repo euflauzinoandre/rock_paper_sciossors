@@ -7,7 +7,9 @@ function getComputerChoice() {
 }
 
 function getHumanChoice(){
-	const choice = prompt("Write your choice: ").toUpperCase();
+	let choice = prompt("Write your choice: \n\n[ROCK | PAPER | SCISSORS]").toUpperCase();
+	while (choice !== "ROCK" && choice !== "PAPER" && choice !== "SCISSORS")
+		choice = prompt("Invalid option! Write your choice: \n\n[ROCK | PAPER | SCISSORS]").toUpperCase();
 	return choice;
 }
 
@@ -38,12 +40,10 @@ function playGame() {
 			\n\nSCORE:
 			\nComputer ${computerScore} x ${humanScore} Human`);
 	}
-	if (computerScore === humanScore)
-		alert("GAME DRAW");
-	else if (computerScore > humanScore)
-		alert("GAME WINNER: Computer");
-	else if (computerScore < humanScore)
-		alert("GAME WINNER: Human");
+	(computerScore === humanScore) ? alert("GAME DRAW") :
+	(computerScore > humanScore) ? alert("GAME WINNER: Computer") :
+	(computerScore < humanScore) ? alert("GAME WINNER: Human") :
+	null
 }
 
 playGame();
