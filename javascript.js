@@ -12,24 +12,20 @@ function getHumanChoice(){
 }
 
 function playRound(computerChoice, humanChoice){
-	if (computerChoice === humanChoice){
-		computerScore++;
-		humanScore++;
-	}
+	if (computerChoice === humanChoice)
+		return "Draw";
 	else if (computerChoice === "PAPER" && humanChoice === "ROCK"
 		|| computerChoice === "ROCK" && humanChoice === "SCISSORS"
 		|| computerChoice === "SCISSORS" && humanChoice === "PAPER"
-	)
+	) {
 		computerScore++;
+		return "Computer";
+	}
 	else if (computerChoice === "ROCK" && humanChoice === "PAPER"
 		|| computerChoice === "SCISSORS" && humanChoice === "ROCK"
 		|| computerChoice === "PAPER" && humanChoice === "SCISSORS"
-	)
+	) {
 		humanScore++;
+		return "Human";
+	}
 }
-
-
-//console.log(
-//`Computer Score: ${computerScore}
-//Human Score: ${humanScore}
-//`);
