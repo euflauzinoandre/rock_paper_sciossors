@@ -36,6 +36,9 @@ function playRound(computerChoice, humanChoice){
 }
 
 function playGame() {
+	computerScore = 0;
+	humanScore = 0;
+
 	for(let i = 1; i <= 5; i++){
 		if (computerScore === 3 || humanScore ===3) {break;}
 		alert(`WINNER ROUND ${i}: ${playRound(getComputerChoice(), getHumanChoice())}
@@ -45,7 +48,8 @@ function playGame() {
 	(computerScore === humanScore) ? alert("GAME DRAW") :
 	(computerScore > humanScore) ? alert("GAME WINNER: Computer") :
 	(computerScore < humanScore) ? alert(`GAME WINNER: ${humanName}`) :
-	null
+	null;
+	(confirm("Play again?") == true) ? playGame() : alert("Thanks for play, see you soon!");
 }
 
 playGame();
