@@ -45,11 +45,11 @@ function playGame() {
 			\n\nSCORE:
 			\nComputer ${computerScore} x ${humanScore} ${humanName}`);
 	}
-	(computerScore === humanScore) ? alert("GAME DRAW") :
-	(computerScore > humanScore) ? alert("GAME WINNER: Computer") :
-	(computerScore < humanScore) ? alert(`GAME WINNER: ${humanName}`) :
+	(computerScore === humanScore) ? alert("MATCH DRAWN") :
+	(computerScore > humanScore) ? alert("GAME OVER! Computer Wins") :
+	(computerScore < humanScore) ? alert(`YOU WIN!`) :
 	null;
-	(confirm("Play again?") == true) ? playGame() : alert("Thanks for play, see you soon!");
+	(confirm(`Play again?`) == true) ? playGame() : alert("Thanks for play, see you soon!");
 }
 
 playGame();
