@@ -29,3 +29,21 @@ function playRound(computerChoice, humanChoice){
 		return "Human";
 	}
 }
+
+function playGame() {
+	alert("Let's play Rock Paper Scissors!");
+	for(let i = 1; i <= 5; i++){
+		if (computerScore === 3 || humanScore ===3) {break;}
+		alert(`WINNER ROUND ${i}: ${playRound(getComputerChoice(), getHumanChoice())}
+			\n\nSCORE:
+			\nComputer ${computerScore} x ${humanScore} Human`);
+	}
+	if (computerScore === humanScore)
+		alert("GAME DRAW");
+	else if (computerScore > humanScore)
+		alert("GAME WINNER: Computer");
+	else if (computerScore < humanScore)
+		alert("GAME WINNER: Human");
+}
+
+playGame();
