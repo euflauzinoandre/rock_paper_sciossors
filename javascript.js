@@ -1,6 +1,9 @@
 let computerScore = 0;
 let humanScore = 0;
 
+alert("Let's play Rock Paper Scissors!");
+const humanName = prompt("Enter a player name:");
+
 function getComputerChoice() {
 	const choice = ["ROCK", "PAPER", "SCISSORS"];
 	return choice[Math.floor(Math.random() * choice.length)];
@@ -28,21 +31,20 @@ function playRound(computerChoice, humanChoice){
 		|| computerChoice === "PAPER" && humanChoice === "SCISSORS"
 	) {
 		humanScore++;
-		return "Human";
+		return (`${humanName}`);
 	}
 }
 
 function playGame() {
-	alert("Let's play Rock Paper Scissors!");
 	for(let i = 1; i <= 5; i++){
 		if (computerScore === 3 || humanScore ===3) {break;}
 		alert(`WINNER ROUND ${i}: ${playRound(getComputerChoice(), getHumanChoice())}
 			\n\nSCORE:
-			\nComputer ${computerScore} x ${humanScore} Human`);
+			\nComputer ${computerScore} x ${humanScore} ${humanName}`);
 	}
 	(computerScore === humanScore) ? alert("GAME DRAW") :
 	(computerScore > humanScore) ? alert("GAME WINNER: Computer") :
-	(computerScore < humanScore) ? alert("GAME WINNER: Human") :
+	(computerScore < humanScore) ? alert(`GAME WINNER: ${humanName}`) :
 	null
 }
 
