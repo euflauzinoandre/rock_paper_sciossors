@@ -20,9 +20,9 @@ body {
 	color: white;
 	font-size: 20px;
 	font-family: mainGameFont;
-	min-height: 100vh;
 	background-image: linear-gradient(-180deg, #ff7509, #ffae28);
 	display: flex;
+	min-height: 100vh;
 	flex-direction: column;
 	text-align: center;
 }
@@ -37,7 +37,7 @@ h1 {
 }
 
 p {
-	font-size: 60px;
+	font-size: 50px;
 }
 
 label {
@@ -46,11 +46,14 @@ label {
 
 #container {
 	display: flex;
+	flex-wrap: wrap;
 	flex-direction: column;
+	margin: 0 12px;
 }
 
 #mainMessage {
 	display: flexbox;
+	flex-wrap: wrap;
 	align-items: center;
 	justify-content: center;
 }
@@ -85,16 +88,19 @@ label {
 
 #gameBoard {
 	display: flex;
+	flex-grow: 1;
+	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
-	height: 300px;
+	min-height: 200px;
 }
 
 #playerBoard,
 #hostBoard {
 	display: flex;
 	flex-wrap: wrap;
-	height: auto;
+	justify-content: center;
+	min-height: auto;
 	width: auto;
 	margin: 30px;
 	background-color: var(--background-player-board);
@@ -103,23 +109,28 @@ label {
 	padding: 0px;
 }
 
-#resultMessage {
+#resultBoard {
 	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	min-height: 300px;
 }
 
 #scoreBoard {
 	display: flex;
-	padding-top: 50px;
+	flex-wrap: wrap;
+	max-height: 300px;
+	margin-top: auto;
 }
 
 #playerScore {
 	display: flex;
 	flex: 1;
 	justify-content: flex-end;
-	gap: 20px;
+	gap: 10px;
 	align-items: center;
 	text-align: right;
-	max-height: 200px;
+	max-height: 100px;
 	margin-right: 20px;
 }
 
@@ -131,7 +142,7 @@ label {
 	justify-content: flex-end;
 	align-items: center;
 	text-align: left;
-	max-height: 200px;
+	max-height: 100px;
 	margin-left: 20px;
 }
 
@@ -144,10 +155,10 @@ img,
 
 .customScoreBox {
 	display: flex;
-	min-width: 200px;
+	min-width: 100px;
 	justify-content: center;
 	align-items: center;
-	min-height: 200px;
+	min-height: 100px;
 	border-radius: 20px;
 	box-shadow: var(--box-shadow);
 }
@@ -155,5 +166,5 @@ img,
 .valueScoreBox {
 	display: flex;
 	color: orange;
-	font-size: 150px;
+	font-size: 100px;
 }
