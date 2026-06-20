@@ -1,6 +1,7 @@
 let computerScore = 0;
 let humanScore = 0;
 
+//Introduction Game Message
 const welcomeMessage = document.querySelector("#welcomeMessage");
 const lable = document.querySelector("label[for=player]");
 const input = document.querySelector("#inputPlayerName");
@@ -14,12 +15,41 @@ function showMessage() {
 	welcomeMessage.appendChild(showPlayerName);
 }
 
+function createBoardGame() {
+	const playerBoard = document.querySelector("#playerBoard");
+
+	const rockIcon = document.createElement("img");
+	rockIcon.setAttribute("src", "./images/icons/rock.png");
+	rockIcon.setAttribute("width", "200");
+	rockIcon.setAttribute("height", "200");
+	rockIcon.setAttribute("alt", "RockIcon");
+	rockIcon.setAttribute("title", "Rock");
+	playerBoard.appendChild(rockIcon);
+
+	const paperIcon = document.createElement("img");
+	paperIcon.setAttribute("src", "../images/icons/paper.png");
+	paperIcon.setAttribute("width", "200");
+	paperIcon.setAttribute("height", "200");
+	paperIcon.setAttribute("alt", "PaperIcon");
+	paperIcon.setAttribute("title", "Paper");
+	playerBoard.appendChild(paperIcon);
+
+	const scissorsIcon = document.createElement("img");
+	scissorsIcon.setAttribute("src", "../images/icons/scissors.png");
+	scissorsIcon.setAttribute("width", "200");
+	scissorsIcon.setAttribute("height", "200");
+	scissorsIcon.setAttribute("alt", "ScissorsIcon");
+	scissorsIcon.setAttribute("title", "Scissors");
+	playerBoard.appendChild(scissorsIcon);
+}
+
 input.addEventListener("keydown", (e) => {
 	if (e.key === "Enter") {
 		showMessage();
 		lable.remove();
 		input.remove();
 		btn.remove();
+		createBoardGame();
 	}
 });
 
@@ -29,7 +59,10 @@ btn.addEventListener("click", () => {
 	lable.remove();
 	input.remove();
 	btn.remove();
+	createBoardGame();
 });
+
+//Show GameBoard and Start The game
 
 function getComputerChoice() {
 	const choice = ["rock", "paper", "scissors"];
