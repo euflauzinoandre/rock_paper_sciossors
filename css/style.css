@@ -3,7 +3,14 @@
 	src: url(../font/GAME_glm.ttf), format("ttf");
 }
 
+:root {
+	--background-button-confirm: #42414d;
+	--background-player-board: #42414d85;
+}
+
 body {
+	margin: 0px;
+	padding: 0px;
 	color: white;
 	font-size: 20px;
 	min-height: 100vh;
@@ -16,28 +23,76 @@ body {
 h1 {
 	font-family: titleGameFont;
 	font-size: 70px;
-	text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+	text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
 	color: white;
 	text-align: center;
 	justify-content: center;
 }
 
+label {
+	font-weight: bolder;
+}
+
+#container {
+	display: flex;
+	flex-direction: column;
+}
+
+#mainMessage {
+	display: flexbox;
+	align-items: center;
+	justify-content: center;
+}
+
 #confirm {
-	color: #a19fa9;
-	background-color: #5e4c45;
-	border-radius: 10px;
+	color: white;
+	background-color: var(--background-button-confirm);
+	border-radius: 5px;
 	border: none;
 	padding: 3px 10px;
 	margin-left: auto;
 }
 
 #confirm:hover {
-	color: white;
 	outline: 1px solid #b89cff;
 	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.308);
+}
+
+#inputPlayerName {
+	border: none;
+	border-radius: 5px;
+	padding: 3px 10px;
+	margin-left: auto;
 }
 
 #welcomeMessage {
 	font-size: 50px;
 	margin: 20px;
+}
+
+#gameBoard {
+	display: flex;
+	height: 300px;
+}
+
+#playerBoard {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	height: auto;
+	width: auto;
+	margin: auto;
+	background-color: var(--background-player-board);
+	border-radius: 20px;
+	border: none;
+	padding: 0px;
+}
+
+#hostBoard {
+	display: flex;
+}
+
+#resultMessage {
+	display: flex;
 }
