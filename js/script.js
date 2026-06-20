@@ -11,35 +11,52 @@ function showMessage() {
 	const playerName = input.value;
 	input.value = "";
 
-	const showPlayerName = document.createTextNode(`Welcome ${playerName}`);
+	const showPlayerName = document.createTextNode(`Welcome <${playerName}>`);
 	welcomeMessage.appendChild(showPlayerName);
 }
+
+function focusIcon() {}
 
 function createBoardGame() {
 	const playerBoard = document.querySelector("#playerBoard");
 
 	const rockIcon = document.createElement("img");
 	rockIcon.setAttribute("src", "./images/icons/rock.png");
-	rockIcon.setAttribute("width", "200");
-	rockIcon.setAttribute("height", "200");
 	rockIcon.setAttribute("alt", "RockIcon");
 	rockIcon.setAttribute("title", "Rock");
+	rockIcon.classList.add("sizeOfIcon");
+	rockIcon.addEventListener("mouseenter", () => {
+		rockIcon.style.transform = "scale(1.05)";
+	});
+	rockIcon.addEventListener("mouseleave", () => {
+		rockIcon.style.transform = "scale(1)";
+	});
 	playerBoard.appendChild(rockIcon);
 
 	const paperIcon = document.createElement("img");
 	paperIcon.setAttribute("src", "../images/icons/paper.png");
-	paperIcon.setAttribute("width", "200");
-	paperIcon.setAttribute("height", "200");
 	paperIcon.setAttribute("alt", "PaperIcon");
 	paperIcon.setAttribute("title", "Paper");
+	paperIcon.classList.add("sizeOfIcon");
+	paperIcon.addEventListener("mouseenter", () => {
+		paperIcon.style.transform = "scale(1.05)";
+	});
+	paperIcon.addEventListener("mouseleave", () => {
+		paperIcon.style.transform = "scale(1)";
+	});
 	playerBoard.appendChild(paperIcon);
 
 	const scissorsIcon = document.createElement("img");
 	scissorsIcon.setAttribute("src", "../images/icons/scissors.png");
-	scissorsIcon.setAttribute("width", "200");
-	scissorsIcon.setAttribute("height", "200");
 	scissorsIcon.setAttribute("alt", "ScissorsIcon");
 	scissorsIcon.setAttribute("title", "Scissors");
+	scissorsIcon.classList.add("sizeOfIcon");
+	scissorsIcon.addEventListener("mouseenter", () => {
+		scissorsIcon.style.transform = "scale(1.05)";
+	});
+	scissorsIcon.addEventListener("mouseleave", () => {
+		scissorsIcon.style.transform = "scale(1)";
+	});
 	playerBoard.appendChild(scissorsIcon);
 }
 
