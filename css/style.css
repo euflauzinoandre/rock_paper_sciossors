@@ -3,8 +3,13 @@
 	src: url(../font/GAME_glm.ttf), format("ttf");
 }
 
+@font-face {
+	font-family: mainGameFont;
+	src: url(../font/Code.ttf), format(ttf);
+}
+
 :root {
-	--background-button-confirm: #42414d;
+	--background-button-confirm: #42414dc9;
 	--background-player-board: #42414d85;
 }
 
@@ -13,6 +18,7 @@ body {
 	padding: 0px;
 	color: white;
 	font-size: 20px;
+	font-family: mainGameFont;
 	min-height: 100vh;
 	background-image: linear-gradient(-180deg, #ff7509, #ffae28);
 	display: flex;
@@ -49,8 +55,11 @@ label {
 	background-color: var(--background-button-confirm);
 	border-radius: 5px;
 	border: none;
-	padding: 3px 10px;
-	margin-left: auto;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 8px;
+	text-align: center;
+	font-family: mainGameFont;
 }
 
 #confirm:hover {
@@ -62,7 +71,6 @@ label {
 	border: none;
 	border-radius: 5px;
 	padding: 3px 10px;
-	margin-left: auto;
 }
 
 #welcomeMessage {
@@ -95,4 +103,9 @@ label {
 
 #resultMessage {
 	display: flex;
+}
+
+.sizeOfIcon {
+	width: 200px;
+	height: 200px;
 }
