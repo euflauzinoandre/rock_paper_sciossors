@@ -1,31 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>RPS Game</title>
+	<link rel="stylesheet" href="./css/style.css">
 	<script src="./js/script.js" defer></script>
 </head>
 
 <body>
-	<h1>Project: Rock Paper Scissors</h1>
+	<h1>Rock Paper Scissors</h1>
 	<div id="container">
-		<label for="">Player:</label>
-		<input type="text" name="text" id="inputPlayerName">
-		<button type="button" id="confirm">Confirm</button>
-		<form>
-			<input type="radio" name="option" id="rock">
-			<label for="rock">rock</label>
-			<input type="radio" name="option" id="paper">
-			<label for="paper">paper</label>
-			<input type="radio" name="option" id="scissors">
-			<label for="scissors">paper</label>
-		</form>
-		<div id="CurrentPlayerName">
-
+		<div id="mainMessage">
+			<label for="player">Player:</label>
+			<input type="text" name="text" id="inputPlayerName">
+			<button type="button" id="confirm">START</button>
+			<div id="welcomeMessage">
+				<!--Current Player-->
+			</div>
 		</div>
-	</div>
+		<div id="gameBoard">
+			<div id="playerBoard">
+				<!--Player Option-->
+			</div>
+			<div id="hostBoard">
+				<!-- Host Options -->
+			</div>
+		</div>
+		<div id="resultMessage"></div>
 
 </body>
 
