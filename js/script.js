@@ -13,11 +13,19 @@ function showMessage() {
 
 	const showPlayerName = document.createTextNode(`Welcome <${playerName}>`);
 	welcomeMessage.appendChild(showPlayerName);
+	return playerName;
 }
 
-function focusIcon() {}
-
+//Create the BoardGame
 function createBoardGame() {
+	createPlayerBoardGame();
+	createHostBoardGame();
+	createResultBoard();
+	createScoreBoard(playerName);
+}
+
+//Create the Player Boardgame
+function createPlayerBoardGame() {
 	const playerBoard = document.querySelector("#playerBoard");
 
 	const rockIcon = document.createElement("img");
@@ -60,41 +68,91 @@ function createBoardGame() {
 	playerBoard.appendChild(scissorsIcon);
 }
 
+//Create the Host Boardgame
+function createHostBoardGame() {
+	const hostBoard = document.querySelector("#hostBoard");
+
+	const hostIcon = document.createElement("img");
+	hostIcon.setAttribute("src", "../images/icons/host.png");
+	hostBoard.appendChild(hostIcon);
+}
+
+//Create de Result of the round
+function createResultBoard() {
+	const resultBoard = document.querySelector("#resultBoard");
+
+	const roundResultTitle = document.createElement("h2");
+	roundResultTitle.textContent = "Round Result";
+	resultBoard.appendChild(roundResultTitle);
+
+	const roundWinner = document.createElement("h3");
+	roundWinner.textContent = "You Win";
+	resultBoard.appendChild(roundWinner);
+}
+
+//Create the ScoreBoard
+function createScoreBoard(playerName) {
+	//Player
+	const playerScore = document.querySelector("#playerScore");
+
+	const backgroundScorePlayer = document.createElement("div");
+	backgroundScorePlayer.classList.add("customScoreBox");
+	backgroundScorePlayer.style.backgroundColor = "white";
+
+	const valueScorePlayer = document.createElement("div");
+	valueScorePlayer.classList.add("valueScoreBox");
+	valueScorePlayer.textContent = "0";
+	backgroundScorePlayer.appendChild(valueScorePlayer);
+
+	const nameScorePlayer = document.createElement("p");
+	nameScorePlayer.textContent = playerName;
+	playerScore.appendChild(nameScorePlayer);
+
+	playerScore.appendChild(backgroundScorePlayer);
+
+	//Host
+	const hostScore = document.querySelector("#hostScore");
+
+	const backgroundScoreHost = document.createElement("div");
+	backgroundScoreHost.classList.add("customScoreBox");
+	backgroundScoreHost.style.backgroundColor = "white";
+
+	const valueScoreHost = document.createElement("div");
+	valueScoreHost.classList.add("valueScoreBox");
+	valueScoreHost.textContent = "0";
+	backgroundScoreHost.appendChild(valueScoreHost);
+
+	const nameScoreHost = document.createElement("p");
+	nameScoreHost.textContent = "Host";
+	hostScore.appendChild(nameScoreHost);
+
+	hostScore.appendChild(backgroundScoreHost);
+}
+
 input.addEventListener("keydown", (e) => {
 	if (e.key === "Enter") {
-		showMessage();
+		playerName = showMessage();
 		lable.remove();
 		input.remove();
 		btn.remove();
-		createBoardGame();
+		createBoardGame(playerName);
 	}
 });
 
 const btn = document.querySelector("#confirm");
 btn.addEventListener("click", () => {
-	showMessage();
+	playerName = showMessage();
 	lable.remove();
 	input.remove();
 	btn.remove();
-	createBoardGame();
+	createBoardGame(playerName);
 });
 
-//Show GameBoard and Start The game
+function choosePlayerOption() {}
 
 function getComputerChoice() {
 	const choice = ["rock", "paper", "scissors"];
 	return choice[Math.floor(Math.random() * choice.length)];
-}
-
-function getHumanChoice() {
-	let choice = prompt(
-		"Write your choice: \n\n[ROCK | PAPER | SCISSORS]",
-	).toUpperCase();
-	while (choice !== "ROCK" && choice !== "PAPER" && choice !== "SCISSORS")
-		choice = prompt(
-			"Invalid option! Write your choice: \n\n[ROCK | PAPER | SCISSORS]",
-		).toUpperCase();
-	return choice;
 }
 
 function playRound(computerChoice, humanChoice) {
