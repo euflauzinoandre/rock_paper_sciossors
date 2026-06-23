@@ -1,11 +1,25 @@
-let computerScore = 0;
-let humanScore = 0;
-
-//Introduction Game Message
+//Starting game
 const welcomeMessage = document.querySelector("#welcomeMessage");
 const lable = document.querySelector("label[for=player]");
 const input = document.querySelector("#inputPlayerName");
 input.focus();
+
+input.addEventListener("keydown", (e) => {
+	if (e.key === "Enter") {
+		startGame();
+	}
+});
+
+const btn = document.querySelector("#confirm");
+btn.addEventListener("click", startGame);
+
+function startGame() {
+	playerName = showMessage();
+	lable.remove();
+	input.remove();
+	btn.remove();
+	createBoardGame(playerName);
+}
 
 function showMessage() {
 	const playerName = input.value;
@@ -129,27 +143,6 @@ function createScoreBoard(playerName) {
 	hostScore.appendChild(backgroundScoreHost);
 }
 
-input.addEventListener("keydown", (e) => {
-	if (e.key === "Enter") {
-		playerName = showMessage();
-		lable.remove();
-		input.remove();
-		btn.remove();
-		createBoardGame(playerName);
-	}
-});
-
-const btn = document.querySelector("#confirm");
-btn.addEventListener("click", () => {
-	playerName = showMessage();
-	lable.remove();
-	input.remove();
-	btn.remove();
-	createBoardGame(playerName);
-});
-
-function choosePlayerOption() {}
-
 function getComputerChoice() {
 	const choice = ["rock", "paper", "scissors"];
 	return choice[Math.floor(Math.random() * choice.length)];
@@ -197,5 +190,3 @@ function playGame() {
 		? playGame()
 		: alert("Thanks for play, see you soon!");
 }
-
-//playGame();
