@@ -2,23 +2,21 @@
 const welcomeMessage = document.querySelector("#welcomeMessage");
 const lable = document.querySelector("label[for=player]");
 const input = document.querySelector("#inputPlayerName");
+const btn = document.querySelector("#confirm");
 input.focus();
 
-input.addEventListener("keydown", (e) => {
-	if (e.key === "Enter") {
-		startGame();
-	}
+const form = document.querySelector("form");
+form.addEventListener("submit", (e) => {
+	e.preventDefault();
+	startGame();
 });
-
-const btn = document.querySelector("#confirm");
-btn.addEventListener("click", startGame);
 
 function startGame() {
 	playerName = showMessage();
 	lable.remove();
 	input.remove();
 	btn.remove();
-	createBoardGame(playerName);
+	createBoardGame();
 }
 
 function showMessage() {
@@ -27,6 +25,7 @@ function showMessage() {
 
 	const showPlayerName = document.createTextNode(`Welcome <${playerName}>`);
 	welcomeMessage.appendChild(showPlayerName);
+
 	return playerName;
 }
 
