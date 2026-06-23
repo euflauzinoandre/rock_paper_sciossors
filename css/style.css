@@ -38,10 +38,11 @@ h1 {
 
 h3 {
 	font-size: 60px;
+	text-align: center;
 	border: 5px solid white;
 	border-radius: 15px;
 	margin: auto;
-	padding: 20px;
+	padding-left: 20px;
 }
 
 p {
@@ -81,6 +82,10 @@ label {
 #confirm:hover {
 	outline: 1px solid #b89cff;
 	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.308);
+}
+
+#confirm:active {
+	transform: scale(0.9);
 }
 
 #inputPlayerName {
