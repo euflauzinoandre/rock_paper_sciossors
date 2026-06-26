@@ -1,5 +1,6 @@
+const container = document.querySelector("#container");
+
 //Starting game
-const welcomeMessage = document.querySelector("#welcomeMessage");
 const lable = document.querySelector("label[for=player]");
 const input = document.querySelector("#inputPlayerName");
 const btn = document.querySelector("#confirm");
@@ -11,16 +12,23 @@ form.addEventListener("submit", (e) => {
 	startGame();
 });
 
-function startGame() {
-	playerName = showMessage();
-	lable.remove();
-	input.remove();
-	btn.remove();
-	createBoardGame();
+async function startGame() {
+	const playerName = showMessage();
+	const difficultLevel = await chooseOptionGame();
+	createBoardGame(playerName, difficultLevel);
+	const roundNumber = document.createElement("h2");
+	container.insertBefore(roundNumber, container.firstChild);
+	for (let i = 1; i <= difficultLevel; i++) {
+		roundNumber.textContent = "Round " + i;
+	}
 }
 
 function showMessage() {
-	const playerName = input.value;
+	const welcomeMessage = document.querySelector("#welcomeMessage");
+	lable.remove();
+	input.remove();
+	btn.remove();
+	playerName = input.value;
 	input.value = "";
 
 	const showPlayerName = document.createTextNode(`Welcome <${playerName}>`);
@@ -29,17 +37,55 @@ function showMessage() {
 	return playerName;
 }
 
+function chooseOptionGame() {
+	return new Promise((resolve) => {
+		const selectBoard = document.createElement("div");
+		selectBoard.classList.add("selectBoard");
+		welcomeMessage.appendChild(selectBoard);
+
+		const chooseOptionMessage = document.createElement("h6");
+		chooseOptionMessage.textContent = "Level Options";
+		selectBoard.appendChild(chooseOptionMessage);
+
+		const onlyOneMatch = document.createElement("button");
+		onlyOneMatch.classList.add("levelSelectButton");
+		onlyOneMatch.textContent = "Only One Match";
+		selectBoard.appendChild(onlyOneMatch);
+		onlyOneMatch.addEventListener("click", () => {
+			resolve(1);
+		});
+
+		const bestOfThree = document.createElement("button");
+		bestOfThree.classList.add("levelSelectButton");
+		bestOfThree.textContent = "Best of 3";
+		selectBoard.appendChild(bestOfThree);
+		bestOfThree.addEventListener("click", () => {
+			resolve(3);
+		});
+
+		const bestOfFive = document.createElement("button");
+		bestOfFive.textContent = "Best of 5";
+		bestOfFive.classList.add("levelSelectButton");
+		selectBoard.appendChild(bestOfFive);
+		bestOfFive.addEventListener("click", () => {
+			resolve(5);
+		});
+	});
+}
+
 //Create the BoardGame
-function createBoardGame() {
+function createBoardGame(playerName, difficultLevel) {
+	welcomeMessage.remove();
 	createPlayerBoardGame();
 	createHostBoardGame();
-	createResultBoard();
+	//createResultBoard();
 	createScoreBoard(playerName);
 }
 
 //Create the Player Boardgame
 function createPlayerBoardGame() {
 	const playerBoard = document.querySelector("#playerBoard");
+	playerBoard.style.minHeight = "auto";
 
 	const rockIcon = document.createElement("img");
 	rockIcon.setAttribute("src", "./images/icons/rock.png");
@@ -93,6 +139,7 @@ function createHostBoardGame() {
 //Create de Result of the round
 function createResultBoard() {
 	const resultBoard = document.querySelector("#resultBoard");
+	resultBoard.style.minHeight = "100px";
 
 	const roundResultTitle = document.createElement("h2");
 	roundResultTitle.textContent = "Round Result";
