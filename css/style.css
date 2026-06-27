@@ -27,11 +27,11 @@ body {
 	text-align: center;
 }
 
-h2 {
-	font-family: mainGameFont;
-	font-size: 50px;
-	margin: 0;
-	padding: 0;
+header {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+	margin: 10px;
 }
 
 h1 {
@@ -43,6 +43,13 @@ h1 {
 	justify-content: center;
 }
 
+h2 {
+	font-family: mainGameFont;
+	font-size: 50px;
+	margin: 0;
+	padding: 0;
+}
+
 h3 {
 	font-size: 60px;
 	text-align: center;
@@ -50,6 +57,13 @@ h3 {
 	border-radius: 15px;
 	margin: auto;
 	padding-left: 20px;
+}
+
+h4 {
+	font-family: mainGameFont;
+	font-size: 30px;
+	margin: 0;
+	padding: 0;
 }
 
 h6 {
@@ -73,6 +87,30 @@ footer {
 	padding-bottom: 10px;
 	text-shadow: var(--box-shadow);
 	margin-top: 20px;
+}
+
+#resetGame,
+#aboutRPS {
+	color: white;
+	background-color: var(--background-button-confirm);
+	border-radius: 5px;
+	border: none;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 8px;
+	text-align: center;
+	font-family: mainGameFont;
+}
+
+#resetGame:hover,
+#aboutRPS:hover {
+	outline: 1px solid #b89cff;
+	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.308);
+}
+
+#resetGame:active,
+#aboutRPS:active {
+	transform: scale(0.9);
 }
 
 #container {
@@ -118,7 +156,7 @@ footer {
 }
 
 #welcomeMessage {
-	font-size: 50px;
+	font-size: 70px;
 	margin: 20px;
 }
 
@@ -128,7 +166,6 @@ footer {
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
-	/*min-height: 200px;*/
 }
 
 #playerBoard,
@@ -136,7 +173,6 @@ footer {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	/*min-height: auto;*/
 	width: auto;
 	margin: 30px;
 	background-color: var(--background-player-board);
@@ -145,21 +181,36 @@ footer {
 	padding: 0px;
 }
 
-#resultBoard {
+#hostBoard {
+	position: relative;
+}
+
+.winnerIcon {
+	width: 400px;
+	height: 400px;
+	position: absolute;
+	transition-duration: 1s;
+	transition-delay: 0.5s;
+}
+
+#roundResultBoard {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	margin: auto;
+	background-color: var(--background-player-board);
+	border-radius: 20px;
 }
 
 #scoreBoard {
 	display: flex;
 	flex-wrap: wrap;
-	margin-top: auto;
-	margin-bottom: 100px;
+	margin-top: 20px;
+	margin-bottom: 50px;
 	padding-top: 15px;
 }
 
-#playerScore {
+#playerScoreBoard {
 	display: flex;
 	flex: 1;
 	justify-content: flex-end;
@@ -170,7 +221,7 @@ footer {
 	margin-right: 20px;
 }
 
-#hostScore {
+#hostScoreBoard {
 	display: flex;
 	flex: 1;
 	gap: 20px;
@@ -186,6 +237,7 @@ footer {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
+	margin: auto;
 }
 
 .levelSelectButton {
@@ -217,6 +269,13 @@ img,
 	border-radius: 20px;
 }
 
+.sizeOfIconOnChooseGame {
+	width: 300px;
+	height: 300px;
+	transition-duration: 0.5s;
+	transition-delay: 0.5s;
+}
+
 .customScoreBox {
 	display: flex;
 	min-width: 100px;
@@ -231,4 +290,5 @@ img,
 	display: flex;
 	color: orange;
 	font-size: 100px;
+	padding-left: 35px;
 }
