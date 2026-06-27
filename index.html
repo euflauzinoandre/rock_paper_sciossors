@@ -12,13 +12,14 @@
 <body>
 	<h1>Rock Paper Scissors</h1>
 	<div id="container">
-		<div id="mainMessage">
+		<form action="">
 			<label for="player">Player:</label>
-			<input type="text" name="text" id="inputPlayerName">
-			<button type="button" id="confirm">START</button>
-			<div id="welcomeMessage">
-				<!--Current Player-->
-			</div>
+			<input type="text" name="text" id="inputPlayerName" required>
+			<button type="submit" id="confirm">START</button>
+		</form>
+		<div id="welcomeMessage">
+			<!--Current Player-->
+			<!-- Select Game Option -->
 		</div>
 		<div id="gameBoard">
 			<div id="playerBoard">
@@ -28,8 +29,19 @@
 				<!-- Host Options -->
 			</div>
 		</div>
-		<div id="resultMessage"></div>
-
+		<div id="resultBoard">
+			<!-- Result of Round -->
+		</div>
+		<div id="scoreBoard">
+			<div id="playerScore">
+				<!-- Player Score -->
+			</div>
+			<div id="hostScore">
+				<!-- Host Score -->
+			</div>
+		</div>
+	</div>
+	<footer>© 2026 Codezino. All Rights Reserved.</footer>
 </body>
 
 </html>
