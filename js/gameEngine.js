@@ -31,12 +31,17 @@ async function playGame() {
 	container.insertBefore(roundNumber, container.firstChild);
 	for (let i = 1; i <= difficultLevel; i++) {
 		roundNumber.textContent = "Round " + i;
-		const hostOption = getHostOption();
 		const playerOption = await getPlayerOption();
+		const hostOption = getHostOption();
+		await sleep(1000);
 		const winner = playRound(hostOption, playerOption);
 		roundResultMessage(winner);
 		updateScore();
 	}
+}
+
+function sleep(time) {
+	return new Promise((resolve) => setTimeout(resolve, time));
 }
 
 function showMessage() {
@@ -153,18 +158,30 @@ function createHostBoardGame() {
 function getPlayerOption() {
 	return new Promise((resolve) => {
 		rockIcon.addEventListener("click", () => {
-			paperIcon.style.opacity = "0.5";
-			scissorsIcon.style.opacity = "0.5";
+			//paperIcon.style.opacity = "0.5";
+			//scissorsIcon.style.opacity = "0.5";
+			paperIcon.remove();
+			scissorsIcon.remove();
+			rockIcon.classList.add("sizeOfIconOnChooseGame");
+			hostIcon.classList.add("sizeOfIconOnChooseGame");
 			resolve("rock");
 		});
 		paperIcon.addEventListener("click", () => {
 			rockIcon.style.opacity = "0.5";
 			scissorsIcon.style.opacity = "0.5";
+			rockIcon.remove();
+			scissorsIcon.remove();
+			paperIcon.classList.add("sizeOfIconOnChooseGame");
+			hostIcon.classList.add("sizeOfIconOnChooseGame");
 			resolve("paper");
 		});
 		scissorsIcon.addEventListener("click", () => {
 			rockIcon.style.opacity = "0.5";
 			paperIcon.style.opacity = "0.5";
+			paperIcon.remove();
+			rockIcon.remove();
+			paperIcon.classList.add("sizeOfIconOnChooseGame");
+			hostIcon.classList.add("sizeOfIconOnChooseGame");
 			resolve("scissors");
 		});
 	});
@@ -176,19 +193,15 @@ function getHostOption() {
 }
 
 function roundResultMessage(winner) {
-	const resultBoard = document.querySelector("#roundResultBoard");
-	resultBoard.style.minHeight = "100px";
-	resultBoard.style.padding = "40px";
-	resultBoard.style.marginTop = "15px";
-	resultBoard.style.marginBotton = "15px";
+	const winnerIcon = document.createElement("img");
+	winnerIcon.setAttribute("src", "../images/icons/roundWinner.png");
+	winnerIcon.classList.add("winnerIcon");
 
-	const roundResultTitle = document.createElement("h2");
-	roundResultTitle.textContent = "Round Winner";
-	resultBoard.appendChild(roundResultTitle);
-
-	const roundWinner = document.createElement("h3");
-	roundWinner.textContent = winner;
-	resultBoard.appendChild(roundWinner);
+	if (winner === "Host") {
+		document.querySelector("#hostBoard").appendChild(winnerIcon);
+	} else if (winner === playerName) {
+		document.querySelector("#playerBoard").appendChild(winnerIcon);
+	}
 }
 
 function createScoreBoard() {
@@ -230,7 +243,7 @@ function createScoreBoard() {
 }
 
 function playRound(hostOption, playerOption) {
-	if (hostOption === playerOption) return "Draw";
+	if (hostOption === playerOption) return "Tie";
 	else if (
 		(hostOption === "paper" && playerOption === "rock") ||
 		(hostOption === "rock" && playerOption === "scissors") ||
