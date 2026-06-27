@@ -1,3 +1,9 @@
+//Global Variables
+let rockIcon;
+let paperIcon;
+let scissorsIcon;
+let hostIcon;
+
 const container = document.querySelector("#container");
 
 //Starting game
@@ -15,11 +21,13 @@ form.addEventListener("submit", (e) => {
 async function startGame() {
 	const playerName = showMessage();
 	const difficultLevel = await chooseOptionGame();
-	createBoardGame(playerName, difficultLevel);
+	createBoardGame(playerName);
 	const roundNumber = document.createElement("h2");
 	container.insertBefore(roundNumber, container.firstChild);
 	for (let i = 1; i <= difficultLevel; i++) {
 		roundNumber.textContent = "Round " + i;
+		const playerOption = await getPlayerOption();
+		const computerOption = getComputerChoice();
 	}
 }
 
@@ -73,8 +81,7 @@ function chooseOptionGame() {
 	});
 }
 
-//Create the BoardGame
-function createBoardGame(playerName, difficultLevel) {
+function createBoardGame(playerName) {
 	welcomeMessage.remove();
 	createPlayerBoardGame();
 	createHostBoardGame();
@@ -82,12 +89,11 @@ function createBoardGame(playerName, difficultLevel) {
 	createScoreBoard(playerName);
 }
 
-//Create the Player Boardgame
 function createPlayerBoardGame() {
 	const playerBoard = document.querySelector("#playerBoard");
 	playerBoard.style.minHeight = "auto";
 
-	const rockIcon = document.createElement("img");
+	rockIcon = document.createElement("img");
 	rockIcon.setAttribute("src", "./images/icons/rock.png");
 	rockIcon.setAttribute("alt", "RockIcon");
 	rockIcon.setAttribute("title", "Rock");
@@ -100,7 +106,7 @@ function createPlayerBoardGame() {
 	});
 	playerBoard.appendChild(rockIcon);
 
-	const paperIcon = document.createElement("img");
+	paperIcon = document.createElement("img");
 	paperIcon.setAttribute("src", "../images/icons/paper.png");
 	paperIcon.setAttribute("alt", "PaperIcon");
 	paperIcon.setAttribute("title", "Paper");
@@ -113,7 +119,7 @@ function createPlayerBoardGame() {
 	});
 	playerBoard.appendChild(paperIcon);
 
-	const scissorsIcon = document.createElement("img");
+	scissorsIcon = document.createElement("img");
 	scissorsIcon.setAttribute("src", "../images/icons/scissors.png");
 	scissorsIcon.setAttribute("alt", "ScissorsIcon");
 	scissorsIcon.setAttribute("title", "Scissors");
@@ -127,16 +133,14 @@ function createPlayerBoardGame() {
 	playerBoard.appendChild(scissorsIcon);
 }
 
-//Create the Host Boardgame
 function createHostBoardGame() {
 	const hostBoard = document.querySelector("#hostBoard");
 
-	const hostIcon = document.createElement("img");
+	hostIcon = document.createElement("img");
 	hostIcon.setAttribute("src", "../images/icons/host.png");
 	hostBoard.appendChild(hostIcon);
 }
 
-//Create de Result of the round
 function createResultBoard() {
 	const resultBoard = document.querySelector("#resultBoard");
 	resultBoard.style.minHeight = "100px";
@@ -150,7 +154,6 @@ function createResultBoard() {
 	resultBoard.appendChild(roundWinner);
 }
 
-//Create the ScoreBoard
 function createScoreBoard(playerName) {
 	//Player
 	const playerScore = document.querySelector("#playerScore");
@@ -189,29 +192,43 @@ function createScoreBoard(playerName) {
 	hostScore.appendChild(backgroundScoreHost);
 }
 
-function getComputerChoice() {
-	const choice = ["rock", "paper", "scissors"];
-	return choice[Math.floor(Math.random() * choice.length)];
+function getPlayerOption() {
+	return new Promise((resolve) => {
+		rockIcon.addEventListener("click", () => {
+			resolve("rock");
+		});
+		paperIcon.addEventListener("click", () => {
+			resolve("paper");
+		});
+		scissorsIcon.addEventListener("click", () => {
+			resolve("scissors");
+		});
+	});
 }
 
-function playRound(computerChoice, humanChoice) {
-	if (computerChoice === humanChoice) return "Draw";
-	else if (
-		(computerChoice === "PAPER" && humanChoice === "ROCK") ||
-		(computerChoice === "ROCK" && humanChoice === "SCISSORS") ||
-		(computerChoice === "SCISSORS" && humanChoice === "PAPER")
-	) {
-		computerScore++;
-		return "Computer";
-	} else if (
-		(computerChoice === "ROCK" && humanChoice === "PAPER") ||
-		(computerChoice === "SCISSORS" && humanChoice === "ROCK") ||
-		(computerChoice === "PAPER" && humanChoice === "SCISSORS")
-	) {
-		humanScore++;
-		return `${humanName}`;
-	}
+function getComputerChoice() {
+	const computerOption = ["rock", "paper", "scissors"];
+	return computerOption[Math.floor(Math.random() * computerOption.length)];
 }
+
+//function playRound(computerChoice, humanChoice) {
+//	if (computerChoice === humanChoice) return "Draw";
+//	else if (
+//		(computerChoice === "PAPER" && humanChoice === "ROCK") ||
+//		(computerChoice === "ROCK" && humanChoice === "SCISSORS") ||
+//		(computerChoice === "SCISSORS" && humanChoice === "PAPER")
+//	) {
+//		computerScore++;
+//		return "Computer";
+//	} else if (
+//		(computerChoice === "ROCK" && humanChoice === "PAPER") ||
+//		(computerChoice === "SCISSORS" && humanChoice === "ROCK") ||
+//		(computerChoice === "PAPER" && humanChoice === "SCISSORS")
+//	) {
+//		humanScore++;
+//		return `${humanName}`;
+//	}
+//}
 
 function playGame() {
 	computerScore = 0;
