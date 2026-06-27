@@ -37,6 +37,8 @@ async function playGame() {
 		const winner = playRound(hostOption, playerOption);
 		roundResultMessage(winner);
 		updateScore();
+		await sleep(2000);
+		restoreGameBoard();
 	}
 }
 
@@ -192,18 +194,6 @@ function getHostOption() {
 	return hostOption[Math.floor(Math.random() * hostOption.length)];
 }
 
-function roundResultMessage(winner) {
-	const winnerIcon = document.createElement("img");
-	winnerIcon.setAttribute("src", "../images/icons/roundWinner.png");
-	winnerIcon.classList.add("winnerIcon");
-
-	if (winner === "Host") {
-		document.querySelector("#hostBoard").appendChild(winnerIcon);
-	} else if (winner === playerName) {
-		document.querySelector("#playerBoard").appendChild(winnerIcon);
-	}
-}
-
 function createScoreBoard() {
 	//Player
 	const playerScoreBoard = document.querySelector("#playerScoreBoard");
@@ -261,11 +251,42 @@ function playRound(hostOption, playerOption) {
 	}
 }
 
+async function roundResultMessage(winner) {
+	const winnerIcon = document.createElement("img");
+	winnerIcon.setAttribute("src", "../images/icons/roundWinner.png");
+	winnerIcon.classList.add("winnerIcon");
+
+	if (winner === "Host") {
+		document.querySelector("#hostBoard").appendChild(winnerIcon);
+	} else if (winner === playerName) {
+		document.querySelector("#playerBoard").appendChild(winnerIcon);
+	}
+	await sleep(2000);
+	winnerIcon.remove();
+}
+
 function updateScore() {
 	document.querySelector("#hostScoreBoard .valueScoreBox").textContent =
 		hostScore;
 	document.querySelector("#playerScoreBoard .valueScoreBox").textContent =
 		playerScore;
+}
+
+function restoreGameBoard() {
+	rockIcon.remove();
+	paperIcon.remove();
+	scissorsIcon.remove();
+	hostIcon.remove();
+
+	rockIcon.classList.remove("sizeOfIconOnChooseGame");
+	paperIcon.classList.remove("sizeOfIconOnChooseGame");
+	scissorsIcon.classList.remove("sizeOfIconOnChooseGame");
+	hostIcon.classList.remove("sizeOfIconOnChooseGame");
+
+	playerBoard.appendChild(rockIcon);
+	playerBoard.appendChild(paperIcon);
+	playerBoard.appendChild(scissorsIcon);
+	hostBoard.appendChild(hostIcon);
 }
 
 //function playGame() {
