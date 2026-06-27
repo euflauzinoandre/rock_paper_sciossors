@@ -1,12 +1,16 @@
 //Global Variables
+let playerName;
+
 let rockIcon;
 let paperIcon;
 let scissorsIcon;
 let hostIcon;
 
-const container = document.querySelector("#container");
+let hostScore = 0;
+let playerScore = 0;
 
-//Starting game
+//Query initial values to start the game
+const container = document.querySelector("#container");
 const lable = document.querySelector("label[for=player]");
 const input = document.querySelector("#inputPlayerName");
 const btn = document.querySelector("#confirm");
@@ -15,19 +19,23 @@ input.focus();
 const form = document.querySelector("form");
 form.addEventListener("submit", (e) => {
 	e.preventDefault();
-	startGame();
+	playGame();
 });
 
-async function startGame() {
-	const playerName = showMessage();
+//Main function
+async function playGame() {
+	playerName = showMessage();
 	const difficultLevel = await chooseOptionGame();
 	createBoardGame(playerName);
 	const roundNumber = document.createElement("h2");
 	container.insertBefore(roundNumber, container.firstChild);
 	for (let i = 1; i <= difficultLevel; i++) {
 		roundNumber.textContent = "Round " + i;
+		const hostOption = getHostOption();
 		const playerOption = await getPlayerOption();
-		const computerOption = getComputerChoice();
+		const winner = playRound(hostOption, playerOption);
+		roundResultMessage(winner);
+		updateScore();
 	}
 }
 
@@ -81,12 +89,11 @@ function chooseOptionGame() {
 	});
 }
 
-function createBoardGame(playerName) {
+function createBoardGame() {
 	welcomeMessage.remove();
 	createPlayerBoardGame();
 	createHostBoardGame();
-	//createResultBoard();
-	createScoreBoard(playerName);
+	createScoreBoard();
 }
 
 function createPlayerBoardGame() {
@@ -138,118 +145,136 @@ function createHostBoardGame() {
 
 	hostIcon = document.createElement("img");
 	hostIcon.setAttribute("src", "../images/icons/host.png");
+	hostIcon.setAttribute("alt", "HostIcon");
+	hostIcon.setAttribute("title", "Host");
 	hostBoard.appendChild(hostIcon);
-}
-
-function createResultBoard() {
-	const resultBoard = document.querySelector("#resultBoard");
-	resultBoard.style.minHeight = "100px";
-
-	const roundResultTitle = document.createElement("h2");
-	roundResultTitle.textContent = "Round Result";
-	resultBoard.appendChild(roundResultTitle);
-
-	const roundWinner = document.createElement("h3");
-	roundWinner.textContent = "You Win";
-	resultBoard.appendChild(roundWinner);
-}
-
-function createScoreBoard(playerName) {
-	//Player
-	const playerScore = document.querySelector("#playerScore");
-
-	const backgroundScorePlayer = document.createElement("div");
-	backgroundScorePlayer.classList.add("customScoreBox");
-	backgroundScorePlayer.style.backgroundColor = "white";
-
-	const valueScorePlayer = document.createElement("div");
-	valueScorePlayer.classList.add("valueScoreBox");
-	valueScorePlayer.textContent = "0";
-	backgroundScorePlayer.appendChild(valueScorePlayer);
-
-	const nameScorePlayer = document.createElement("p");
-	nameScorePlayer.textContent = playerName;
-	playerScore.appendChild(nameScorePlayer);
-
-	playerScore.appendChild(backgroundScorePlayer);
-
-	//Host
-	const hostScore = document.querySelector("#hostScore");
-
-	const backgroundScoreHost = document.createElement("div");
-	backgroundScoreHost.classList.add("customScoreBox");
-	backgroundScoreHost.style.backgroundColor = "white";
-
-	const valueScoreHost = document.createElement("div");
-	valueScoreHost.classList.add("valueScoreBox");
-	valueScoreHost.textContent = "0";
-	backgroundScoreHost.appendChild(valueScoreHost);
-
-	const nameScoreHost = document.createElement("p");
-	nameScoreHost.textContent = "Host";
-	hostScore.appendChild(nameScoreHost);
-
-	hostScore.appendChild(backgroundScoreHost);
 }
 
 function getPlayerOption() {
 	return new Promise((resolve) => {
 		rockIcon.addEventListener("click", () => {
+			paperIcon.style.opacity = "0.5";
+			scissorsIcon.style.opacity = "0.5";
 			resolve("rock");
 		});
 		paperIcon.addEventListener("click", () => {
+			rockIcon.style.opacity = "0.5";
+			scissorsIcon.style.opacity = "0.5";
 			resolve("paper");
 		});
 		scissorsIcon.addEventListener("click", () => {
+			rockIcon.style.opacity = "0.5";
+			paperIcon.style.opacity = "0.5";
 			resolve("scissors");
 		});
 	});
 }
 
-function getComputerChoice() {
-	const computerOption = ["rock", "paper", "scissors"];
-	return computerOption[Math.floor(Math.random() * computerOption.length)];
+function getHostOption() {
+	const hostOption = ["rock", "paper", "scissors"];
+	return hostOption[Math.floor(Math.random() * hostOption.length)];
 }
 
-//function playRound(computerChoice, humanChoice) {
-//	if (computerChoice === humanChoice) return "Draw";
-//	else if (
-//		(computerChoice === "PAPER" && humanChoice === "ROCK") ||
-//		(computerChoice === "ROCK" && humanChoice === "SCISSORS") ||
-//		(computerChoice === "SCISSORS" && humanChoice === "PAPER")
-//	) {
-//		computerScore++;
-//		return "Computer";
-//	} else if (
-//		(computerChoice === "ROCK" && humanChoice === "PAPER") ||
-//		(computerChoice === "SCISSORS" && humanChoice === "ROCK") ||
-//		(computerChoice === "PAPER" && humanChoice === "SCISSORS")
-//	) {
-//		humanScore++;
-//		return `${humanName}`;
-//	}
-//}
+function roundResultMessage(winner) {
+	const resultBoard = document.querySelector("#roundResultBoard");
+	resultBoard.style.minHeight = "100px";
+	resultBoard.style.padding = "40px";
+	resultBoard.style.marginTop = "15px";
+	resultBoard.style.marginBotton = "15px";
 
-function playGame() {
-	computerScore = 0;
-	humanScore = 0;
+	const roundResultTitle = document.createElement("h2");
+	roundResultTitle.textContent = "Round Winner";
+	resultBoard.appendChild(roundResultTitle);
 
-	for (let i = 1; i <= 5; i++) {
-		if (computerScore === 3 || humanScore === 3) {
-			break;
-		}
-		alert(`WINNER ROUND ${i}: ${playRound(getComputerChoice(), getHumanChoice())}
-			\n\nSCORE:
-			\nComputer ${computerScore} x ${humanScore} ${humanName}`);
+	const roundWinner = document.createElement("h3");
+	roundWinner.textContent = winner;
+	resultBoard.appendChild(roundWinner);
+}
+
+function createScoreBoard() {
+	//Player
+	const playerScoreBoard = document.querySelector("#playerScoreBoard");
+
+	const backgroundScorePlayer = document.createElement("div");
+	backgroundScorePlayer.classList.add("customScoreBox");
+	backgroundScorePlayer.style.backgroundColor = "white";
+
+	const valuePlayerScore = document.createElement("div");
+	valuePlayerScore.classList.add("valueScoreBox");
+	valuePlayerScore.textContent = playerScore;
+	backgroundScorePlayer.appendChild(valuePlayerScore);
+
+	const nameScorePlayer = document.createElement("p");
+	nameScorePlayer.textContent = playerName;
+	playerScoreBoard.appendChild(nameScorePlayer);
+
+	playerScoreBoard.appendChild(backgroundScorePlayer);
+
+	//Host
+	const hostScoreBoard = document.querySelector("#hostScoreBoard");
+
+	const backgroundScoreHost = document.createElement("div");
+	backgroundScoreHost.classList.add("customScoreBox");
+	backgroundScoreHost.style.backgroundColor = "white";
+
+	const valueHostScore = document.createElement("div");
+	valueHostScore.classList.add("valueScoreBox");
+	valueHostScore.textContent = hostScore;
+	backgroundScoreHost.appendChild(valueHostScore);
+
+	const nameScoreHost = document.createElement("p");
+	nameScoreHost.textContent = "Host";
+	hostScoreBoard.appendChild(nameScoreHost);
+
+	hostScoreBoard.appendChild(backgroundScoreHost);
+}
+
+function playRound(hostOption, playerOption) {
+	if (hostOption === playerOption) return "Draw";
+	else if (
+		(hostOption === "paper" && playerOption === "rock") ||
+		(hostOption === "rock" && playerOption === "scissors") ||
+		(hostOption === "scissors" && playerOption === "paper")
+	) {
+		hostScore++;
+		return "Host";
+	} else if (
+		(hostOption === "rock" && playerOption === "paper") ||
+		(hostOption === "scissors" && playerOption === "rock") ||
+		(hostOption === "paper" && playerOption === "scissors")
+	) {
+		playerScore++;
+		return playerName;
 	}
-	computerScore === humanScore
-		? alert("MATCH DRAWN")
-		: computerScore > humanScore
-			? alert("GAME OVER! Computer Wins")
-			: computerScore < humanScore
-				? alert(`YOU WIN!`)
-				: null;
-	confirm(`Play again?`) == true
-		? playGame()
-		: alert("Thanks for play, see you soon!");
 }
+
+function updateScore() {
+	document.querySelector("#hostScoreBoard .valueScoreBox").textContent =
+		hostScore;
+	document.querySelector("#playerScoreBoard .valueScoreBox").textContent =
+		playerScore;
+}
+
+//function playGame() {
+//	computerScore = 0;
+//	humanScore = 0;
+
+//	for (let i = 1; i <= 5; i++) {
+//		if (computerScore === 3 || humanScore === 3) {
+//			break;
+//		}
+//		alert(`WINNER ROUND ${i}: ${playRound(getComputerChoice(), getHumanChoice())}
+//			\n\nSCORE:
+//			\nComputer ${computerScore} x ${humanScore} ${humanName}`);
+//	}
+//	computerScore === humanScore
+//		? alert("MATCH DRAWN")
+//		: computerScore > humanScore
+//			? alert("GAME OVER! Computer Wins")
+//			: computerScore < humanScore
+//				? alert(`YOU WIN!`)
+//				: null;
+//	confirm(`Play again?`) == true
+//		? playGame()
+//		: alert("Thanks for play, see you soon!");
+//}
