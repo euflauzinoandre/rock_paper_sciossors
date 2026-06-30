@@ -1,5 +1,8 @@
 //Global Variables
 let playerName;
+let showWelcomeMessage;
+let difficultLevel;
+let roundNumber;
 
 let rockIcon;
 let paperIcon;
@@ -11,6 +14,7 @@ let playerScore = 0;
 
 //Query initial values to start the game
 const container = document.querySelector("#container");
+const welcomeMessageBoard = document.querySelector("#welcomeMessageBoard");
 const lable = document.querySelector("label[for=player]");
 const input = document.querySelector("#inputPlayerName");
 const btn = document.querySelector("#confirm");
@@ -19,16 +23,20 @@ input.focus();
 const form = document.querySelector("form");
 form.addEventListener("submit", (e) => {
 	e.preventDefault();
-	playGame();
+	start();
 });
 
 //Main function
-async function playGame() {
+async function start() {
 	playerName = showMessage();
-	const difficultLevel = await chooseOptionGame();
+	difficultLevel = await chooseOptionGame();
 	createBoardGame(playerName);
-	const roundNumber = document.createElement("h2");
+	roundNumber = document.createElement("h2");
 	container.insertBefore(roundNumber, container.firstChild);
+	playGame();
+}
+
+async function playGame() {
 	for (let i = 1; i <= difficultLevel; i++) {
 		roundNumber.textContent = "Round " + i;
 		const playerOption = await getPlayerOption();
@@ -38,7 +46,15 @@ async function playGame() {
 		roundResultMessage(winner);
 		updateScore();
 		await sleep(2000);
-		restoreGameBoard();
+		playAgain = confirmToPlayAgain();
+		//updateLevel = confirmToUpdateLevel();
+		if (playAgain) {
+			i = 1;
+			console.log(
+				`Player option: ${playerOption} | Host option: ${hostOption} | Winner: ${winner}`,
+			);
+			resetTheGame();
+		}
 	}
 }
 
@@ -47,7 +63,8 @@ function sleep(time) {
 }
 
 function showMessage() {
-	const welcomeMessage = document.querySelector("#welcomeMessage");
+	showWelcomeMessage = document.createElement("div");
+	welcomeMessageBoard.appendChild(showWelcomeMessage);
 	lable.remove();
 	input.remove();
 	btn.remove();
@@ -55,7 +72,7 @@ function showMessage() {
 	input.value = "";
 
 	const showPlayerName = document.createTextNode(`Welcome <${playerName}>`);
-	welcomeMessage.appendChild(showPlayerName);
+	showWelcomeMessage.appendChild(showPlayerName);
 
 	return playerName;
 }
@@ -64,7 +81,7 @@ function chooseOptionGame() {
 	return new Promise((resolve) => {
 		const selectBoard = document.createElement("div");
 		selectBoard.classList.add("selectBoard");
-		welcomeMessage.appendChild(selectBoard);
+		showWelcomeMessage.appendChild(selectBoard);
 
 		const chooseOptionMessage = document.createElement("h6");
 		chooseOptionMessage.textContent = "Level Options";
@@ -97,7 +114,7 @@ function chooseOptionGame() {
 }
 
 function createBoardGame() {
-	welcomeMessage.remove();
+	showWelcomeMessage.remove();
 	createPlayerBoardGame();
 	createHostBoardGame();
 	createScoreBoard();
@@ -300,6 +317,18 @@ function restoreGameBoard() {
 	playerBoard.appendChild(paperIcon);
 	playerBoard.appendChild(scissorsIcon);
 	hostBoard.appendChild(hostIcon);
+}
+
+function resetTheGame() {
+	playerScore = 0;
+	hostScore = 0;
+	updateScore();
+	restoreGameBoard();
+	playGame();
+}
+
+function confirmToPlayAgain() {
+	return confirm("Play again?");
 }
 
 //function playGame() {
