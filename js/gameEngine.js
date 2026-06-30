@@ -254,15 +254,28 @@ function playRound(hostOption, playerOption) {
 async function roundResultMessage(winner) {
 	const winnerIcon = document.createElement("img");
 	winnerIcon.setAttribute("src", "../images/icons/roundWinner.png");
-	winnerIcon.classList.add("winnerIcon");
+	winnerIcon.classList.add("resultIcon");
 
-	if (winner === "Host") {
+	const tieHostIcon = document.createElement("img");
+	tieHostIcon.setAttribute("src", "../images/icons/tieHost.png");
+	tieHostIcon.classList.add("resultIcon");
+
+	const tiePlayerIcon = document.createElement("img");
+	tiePlayerIcon.setAttribute("src", "../images/icons/tiePlayer.png");
+	tiePlayerIcon.classList.add("resultIcon");
+
+	if (winner === "Host")
 		document.querySelector("#hostBoard").appendChild(winnerIcon);
-	} else if (winner === playerName) {
+	else if (winner === playerName)
 		document.querySelector("#playerBoard").appendChild(winnerIcon);
+	else if (winner === "Tie") {
+		document.querySelector("#hostBoard").appendChild(tieHostIcon);
+		document.querySelector("#playerBoard").appendChild(tiePlayerIcon);
 	}
 	await sleep(2000);
 	winnerIcon.remove();
+	tieHostIcon.remove();
+	tiePlayerIcon.remove();
 }
 
 function updateScore() {
