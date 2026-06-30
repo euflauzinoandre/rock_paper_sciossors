@@ -47,15 +47,15 @@ async function playGame() {
 		roundResultMessage(winner);
 		updateScore();
 		await sleep(2000);
-		playAgain = confirmToPlayAgain();
-		//updateLevel = confirmToUpdateLevel();
-		if (playAgain) {
-			i = 1;
-			console.log(
-				`Player option: ${playerOption} | Host option: ${hostOption} | Winner: ${winner}`,
-			);
-			resetTheGame();
+		if (i === difficultLevel) {
+			playAgain = confirmToPlayAgain();
+			//updateLevel = confirmToUpdateLevel();
+			if (playAgain) {
+				i = 1;
+				resetTheGame();
+			}
 		}
+		restoreGameBoard();
 	}
 }
 
