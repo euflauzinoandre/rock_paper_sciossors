@@ -179,13 +179,10 @@ footer {
 	border-radius: 20px;
 	border: none;
 	padding: 0px;
-}
-
-#hostBoard {
 	position: relative;
 }
 
-.winnerIcon {
+.resultIcon {
 	width: 400px;
 	height: 400px;
 	position: absolute;
