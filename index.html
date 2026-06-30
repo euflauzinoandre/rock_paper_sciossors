@@ -6,18 +6,23 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>RPS Game</title>
 	<link rel="stylesheet" href="./css/style.css">
-	<script src="./js/script.js" defer></script>
+	<script src="./js/gameEngine.js" defer></script>
+	<script src="./js/superiorMenu.js" defer></script>
 </head>
 
 <body>
+	<header>
+		<button id="resetGame">RESET</button>
+		<button id="aboutGame">ABOUT</button>
+	</header>
 	<h1>Rock Paper Scissors</h1>
 	<div id="container">
 		<form action="">
 			<label for="player">Player:</label>
-			<input type="text" name="text" id="inputPlayerName" required>
+			<input type="text" name="username" id="inputPlayerName" maxlength="10" autocomplete="off" required>
 			<button type="submit" id="confirm">START</button>
 		</form>
-		<div id="welcomeMessage">
+		<div id="welcomeMessageBoard">
 			<!--Current Player-->
 			<!-- Select Game Option -->
 		</div>
@@ -29,14 +34,11 @@
 				<!-- Host Options -->
 			</div>
 		</div>
-		<div id="resultBoard">
-			<!-- Result of Round -->
-		</div>
 		<div id="scoreBoard">
-			<div id="playerScore">
+			<div id="playerScoreBoard">
 				<!-- Player Score -->
 			</div>
-			<div id="hostScore">
+			<div id="hostScoreBoard">
 				<!-- Host Score -->
 			</div>
 		</div>
