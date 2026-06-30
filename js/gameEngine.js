@@ -3,6 +3,7 @@ let playerName;
 let showWelcomeMessage;
 let difficultLevel;
 let roundNumber;
+let winner;
 
 let rockIcon;
 let paperIcon;
@@ -26,7 +27,6 @@ form.addEventListener("submit", (e) => {
 	start();
 });
 
-//Main function
 async function start() {
 	playerName = showMessage();
 	difficultLevel = await chooseOptionGame();
@@ -43,17 +43,17 @@ async function playGame() {
 		const playerOption = await getPlayerOption();
 		const hostOption = getHostOption();
 		await sleep(1000);
-		const winner = playRound(hostOption, playerOption);
+		winner = playRound(hostOption, playerOption);
 		roundResultMessage(winner);
 		updateScore();
 		await sleep(2000);
 		if (i === difficultLevel) {
-			playAgain = confirmToPlayAgain();
+			playAgain = await confirmToPlayAgain();
 			//updateLevel = confirmToUpdateLevel();
-			if (playAgain) {
+			if (playAgain === "confirm") {
 				i = 1;
 				resetTheGame();
-			}
+			} else if (playAgain === "cancel") window.location.reload();
 		}
 		restoreGameBoard();
 	}
@@ -181,8 +181,6 @@ function createHostBoardGame() {
 function getPlayerOption() {
 	return new Promise((resolve) => {
 		rockIcon.addEventListener("click", () => {
-			//paperIcon.style.opacity = "0.5";
-			//scissorsIcon.style.opacity = "0.5";
 			paperIcon.remove();
 			scissorsIcon.remove();
 			rockIcon.classList.add("sizeOfIconOnChooseGame");
@@ -190,8 +188,6 @@ function getPlayerOption() {
 			resolve("rock");
 		});
 		paperIcon.addEventListener("click", () => {
-			rockIcon.style.opacity = "0.5";
-			scissorsIcon.style.opacity = "0.5";
 			rockIcon.remove();
 			scissorsIcon.remove();
 			paperIcon.classList.add("sizeOfIconOnChooseGame");
@@ -199,8 +195,6 @@ function getPlayerOption() {
 			resolve("paper");
 		});
 		scissorsIcon.addEventListener("click", () => {
-			rockIcon.style.opacity = "0.5";
-			paperIcon.style.opacity = "0.5";
 			paperIcon.remove();
 			rockIcon.remove();
 			paperIcon.classList.add("sizeOfIconOnChooseGame");
@@ -332,29 +326,48 @@ function resetTheGame() {
 }
 
 function confirmToPlayAgain() {
-	return confirm("Play again?");
+	const playAgainBackground = document.createElement("div");
+	playAgainBackground.classList.add("backgroundBoard");
+	body.appendChild(playAgainBackground);
+
+	const playAgainMessageBoard = document.createElement("div");
+	playAgainMessageBoard.classList.add("messageBoard");
+	playAgainBackground.appendChild(playAgainMessageBoard);
+
+	const playAgainTitle = document.createElement("div");
+	playAgainTitle.classList.add("titleMessageBoard");
+	if (winner === playerName)
+		playAgainTitle.textContent = "Congratulations. You Win!";
+	if (winner === "Host") playAgainTitle.textContent = "Sorry... Host Win!";
+	if (winner === "Tie") playAgainTitle.textContent = "It was a draw...";
+	playAgainMessageBoard.appendChild(playAgainTitle);
+
+	const playAgainMessage = document.createElement("div");
+	playAgainMessage.classList.add("textMessageBoard");
+	playAgainMessage.textContent = "Do you want to play again?";
+	playAgainMessage.style.textAlign = "center";
+	playAgainMessageBoard.appendChild(playAgainMessage);
+
+	const playAgainButtons = document.createElement("div");
+	playAgainButtons.classList.add("defaultButtons");
+	playAgainMessageBoard.appendChild(playAgainButtons);
+
+	const playAgainButtonConfirm = document.createElement("button");
+	playAgainButtonConfirm.classList.add("buttonMessageBoard");
+	playAgainButtonConfirm.textContent = "Play";
+	playAgainButtons.appendChild(playAgainButtonConfirm);
+
+	const playAgainButtonCancel = document.createElement("button");
+	playAgainButtonCancel.classList.add("buttonMessageBoard");
+	playAgainButtonCancel.textContent = "Get Out";
+	playAgainButtons.appendChild(playAgainButtonCancel);
+	return new Promise((resolve) => {
+		playAgainButtonConfirm.addEventListener("click", () => {
+			playAgainBackground.remove();
+			resolve("confirm");
+		});
+		playAgainButtonCancel.addEventListener("click", () => {
+			resolve("cancel");
+		});
+	});
 }
-
-//function playGame() {
-//	computerScore = 0;
-//	humanScore = 0;
-
-//	for (let i = 1; i <= 5; i++) {
-//		if (computerScore === 3 || humanScore === 3) {
-//			break;
-//		}
-//		alert(`WINNER ROUND ${i}: ${playRound(getComputerChoice(), getHumanChoice())}
-//			\n\nSCORE:
-//			\nComputer ${computerScore} x ${humanScore} ${humanName}`);
-//	}
-//	computerScore === humanScore
-//		? alert("MATCH DRAWN")
-//		: computerScore > humanScore
-//			? alert("GAME OVER! Computer Wins")
-//			: computerScore < humanScore
-//				? alert(`YOU WIN!`)
-//				: null;
-//	confirm(`Play again?`) == true
-//		? playGame()
-//		: alert("Thanks for play, see you soon!");
-//}
