@@ -4,7 +4,7 @@
 }
 
 @font-face {
-	font-family: mainGameFont;
+	font-family: RPSFont;
 	src: url(../font/Code.ttf), format(ttf);
 }
 
@@ -12,19 +12,30 @@
 	--background-button-confirm: #42414dc9;
 	--background-player-board: #42414d85;
 	--box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+	--background-body: linear-gradient(-180deg, #ff7509, #ffae28);
 }
 
 body {
+	/* Last update */
+	position: relative;
 	margin: 0px;
 	padding: 0px;
 	color: white;
 	font-size: 20px;
-	font-family: mainGameFont;
-	background-image: linear-gradient(-180deg, #ff7509, #ffae28);
+	font-family: RPSFont;
+	background-image: var(--background-body);
 	display: flex;
 	min-height: 100vh;
 	flex-direction: column;
 	text-align: center;
+}
+
+form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+	flex-wrap: wrap;
 }
 
 header {
@@ -32,6 +43,18 @@ header {
 	justify-content: flex-end;
 	gap: 10px;
 	margin: 10px;
+}
+
+label {
+	font-family: RPSFont;
+	font-size: 50px;
+}
+
+input {
+	height: 40px;
+	width: 300px;
+	font-family: RPSFont;
+	font-size: 50px;
 }
 
 h1 {
@@ -44,7 +67,7 @@ h1 {
 }
 
 h2 {
-	font-family: mainGameFont;
+	font-family: RPSFont;
 	font-size: 50px;
 	margin: 0;
 	padding: 0;
@@ -60,7 +83,7 @@ h3 {
 }
 
 h4 {
-	font-family: mainGameFont;
+	font-family: RPSFont;
 	font-size: 30px;
 	margin: 0;
 	padding: 0;
@@ -69,15 +92,11 @@ h4 {
 h6 {
 	margin-top: 70px;
 	margin-bottom: 10px;
-	font-family: mainGameFont;
+	font-family: RPSFont;
 }
 
 p {
 	font-size: 50px;
-}
-
-label {
-	font-weight: bolder;
 }
 
 footer {
@@ -90,7 +109,7 @@ footer {
 }
 
 #resetGame,
-#aboutRPS {
+#aboutGame {
 	color: white;
 	background-color: var(--background-button-confirm);
 	border-radius: 5px;
@@ -99,17 +118,17 @@ footer {
 	padding-bottom: 5px;
 	padding-left: 8px;
 	text-align: center;
-	font-family: mainGameFont;
+	font-family: RPSFont;
 }
 
 #resetGame:hover,
-#aboutRPS:hover {
+#aboutGame:hover {
 	outline: 1px solid #b89cff;
 	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.308);
 }
 
 #resetGame:active,
-#aboutRPS:active {
+#aboutGame:active {
 	transform: scale(0.9);
 }
 
@@ -118,6 +137,7 @@ footer {
 	flex: 1;
 	flex-wrap: wrap;
 	flex-direction: column;
+	position: relative;
 	margin: 0 12px;
 }
 
@@ -133,11 +153,12 @@ footer {
 	background-color: var(--background-button-confirm);
 	border-radius: 5px;
 	border: none;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	padding-left: 8px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 20px;
 	text-align: center;
-	font-family: mainGameFont;
+	font-family: RPSFont;
+	font-size: 40px;
 }
 
 #confirm:hover {
@@ -155,9 +176,12 @@ footer {
 	padding: 3px 10px;
 }
 
-#welcomeMessage {
+#welcomeMessageBoard {
 	font-size: 70px;
 	margin: 20px;
+	margin: auto;
+	border-radius: 10px;
+	padding: 10px;
 }
 
 #gameBoard {
@@ -235,6 +259,7 @@ footer {
 	flex-direction: column;
 	gap: 20px;
 	margin: auto;
+	padding-bottom: 30px;
 }
 
 .levelSelectButton {
@@ -245,7 +270,7 @@ footer {
 	background-color: var(--background-button-confirm);
 	border-radius: 20px;
 	border: none;
-	font-family: mainGameFont;
+	font-family: RPSFont;
 	font-size: 20px;
 }
 
@@ -288,4 +313,68 @@ img,
 	color: orange;
 	font-size: 100px;
 	padding-left: 35px;
+}
+
+.backgroundBoard {
+	position: absolute;
+	inset: 0;
+	background-color: var(--background-button-confirm);
+}
+
+.messageBoard {
+	display: flex;
+	gap: 20px;
+	flex-direction: column;
+	position: absolute;
+	background-color: #2b2a33e7;
+	border-radius: 10px;
+	min-width: 700px;
+	padding: 30px;
+	top: 50%; /* Move o canto superior esquerdo da div para 50% da altura da referência (normalmente a viewport ou o elemento pai posicionado). */
+	left: 50%; /* Move o canto superior esquerdo da div para 50% da largura.*/
+	transform: translate(
+		-50%,
+		-50%
+	); /* 50% da sua largura para a esquerda. 50% da sua altura para cima. Importante: aqui os % são calculados sobre o tamanho da própria div, não da tela. */
+}
+
+.titleMessageBoard {
+	text-align: center;
+	font-size: 30px;
+	color: orange;
+}
+
+.textMessageBoard {
+	text-align: justify;
+	text-justify: inter-word;
+	hyphens: auto;
+	word-break: break-word;
+	text-align: justify;
+	color: white;
+	font-family: RPSFont;
+	font-size: 20px;
+	padding: 20px;
+}
+
+.defaultButtons {
+	display: flex;
+	flex: 1;
+	gap: 20px;
+	margin: auto;
+	justify-content: center;
+}
+
+.buttonMessageBoard {
+	display: flex;
+	flex-direction: row;
+	font-family: RPSFont;
+	font-weight: bolder;
+	font-size: 20px;
+	align-items: center;
+	padding: 10px;
+	margin: auto;
+	color: white;
+	background-image: var(--background-body);
+	border-radius: 5px;
+	border-color: white;
 }
