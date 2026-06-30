@@ -8,31 +8,31 @@ resetGame.addEventListener("click", () => {
 
 const aboutGame = document.querySelector("#aboutGame");
 aboutGame.addEventListener("click", () => {
-	const backgroundAbout = document.createElement("div");
-	backgroundAbout.classList.add("backgroundAbout");
-	body.appendChild(backgroundAbout);
+	const backgroundBoard = document.createElement("div");
+	backgroundBoard.classList.add("backgroundBoard");
+	body.appendChild(backgroundBoard);
 
-	const aboutBoard = document.createElement("div");
-	aboutBoard.classList.add("aboutBoard");
-	backgroundAbout.appendChild(aboutBoard);
+	const messageBoard = document.createElement("div");
+	messageBoard.classList.add("messageBoard");
+	backgroundBoard.appendChild(messageBoard);
 
-	const aboutTitle = document.createElement("div");
-	aboutTitle.classList.add("aboutTitle");
-	aboutTitle.textContent = "About";
-	aboutBoard.appendChild(aboutTitle);
+	const titleMessageBoard = document.createElement("div");
+	titleMessageBoard.classList.add("titleMessageBoard");
+	titleMessageBoard.textContent = "About";
+	messageBoard.appendChild(titleMessageBoard);
 
 	const aboutMessage = document.createElement("div");
-	aboutMessage.classList.add("aboutMessage");
+	aboutMessage.classList.add("textMessageBoard");
 	aboutMessage.textContent =
 		"Rock, Paper, Scissors is a simple interactive web application developed using HTML, CSS, and JavaScript. The project demonstrates fundamental front-end development concepts, including DOM manipulation, event-driven programming, dynamic content updates, and responsive user interactions. Built as part of The Odin Project curriculum, it serves as a practical exercise in transforming JavaScript logic into a complete browser-based experience.";
-	aboutBoard.appendChild(aboutMessage);
+	messageBoard.appendChild(aboutMessage);
 
 	const aboutButtonMessage = document.createElement("button");
-	aboutButtonMessage.classList.add("aboutButtonMessage");
+	aboutButtonMessage.classList.add("buttonMessageBoard");
 	aboutButtonMessage.textContent = "Let's Play";
-	aboutBoard.appendChild(aboutButtonMessage);
+	messageBoard.appendChild(aboutButtonMessage);
 
 	aboutButtonMessage.addEventListener("click", () => {
-		backgroundAbout.remove();
+		backgroundBoard.remove();
 	});
 });
