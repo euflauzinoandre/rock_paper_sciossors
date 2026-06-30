@@ -37,6 +37,7 @@ async function start() {
 }
 
 async function playGame() {
+	welcomeMessageBoard.style.backgroundColor = "";
 	for (let i = 1; i <= difficultLevel; i++) {
 		roundNumber.textContent = "Round " + i;
 		const playerOption = await getPlayerOption();
@@ -64,6 +65,8 @@ function sleep(time) {
 
 function showMessage() {
 	showWelcomeMessage = document.createElement("div");
+	showWelcomeMessage.style.border = "2px solid orange";
+	showWelcomeMessage.style.padding = "10px";
 	welcomeMessageBoard.appendChild(showWelcomeMessage);
 	lable.remove();
 	input.remove();
@@ -71,6 +74,7 @@ function showMessage() {
 	playerName = input.value;
 	input.value = "";
 
+	welcomeMessageBoard.style.backgroundColor = "#42414d85";
 	const showPlayerName = document.createTextNode(`Welcome <${playerName}>`);
 	showWelcomeMessage.appendChild(showPlayerName);
 
