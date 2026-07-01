@@ -66,6 +66,7 @@ function sleep(time) {
 function showMessage() {
 	showWelcomeMessage = document.createElement("div");
 	showWelcomeMessage.style.border = "2px solid orange";
+	showWelcomeMessage.style.borderRadius = "10px";
 	showWelcomeMessage.style.padding = "10px";
 	welcomeMessageBoard.appendChild(showWelcomeMessage);
 	lable.remove();
