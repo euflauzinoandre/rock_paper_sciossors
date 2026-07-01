@@ -42,7 +42,7 @@ async function playGame() {
 	for (let i = 1; i <= playerMatchChoice; i++) {
 		roundNumber.textContent = "Round " + i;
 		const playerOption = await getPlayerOption();
-		const hostOption = getHostOption();
+		const hostOption = await getHostOption();
 		await sleep(1000);
 		roundWinner = playRound(hostOption, playerOption);
 		roundResultMessage(roundWinner);
@@ -204,9 +204,26 @@ function getPlayerOption() {
 	});
 }
 
-function getHostOption() {
+async function getHostOption() {
 	const hostOption = ["rock", "paper", "scissors"];
-	return hostOption[Math.floor(Math.random() * hostOption.length)];
+	const finalHostOption =
+		hostOption[Math.floor(Math.random() * hostOption.length)];
+
+	let delay = 50;
+
+	for (let i = 0; i < 15; i++) {
+		const randomOption =
+			hostOption[Math.floor(Math.random() * hostOption.length)];
+		showHostIconRandom(randomOption);
+		await sleep(delay);
+		delay += 15;
+	}
+	showHostIconRandom(finalHostOption);
+	return finalHostOption;
+}
+
+function showHostIconRandom(option) {
+	hostIcon.src = `images/icons/${option}.png`;
 }
 
 function createScoreBoard() {
@@ -311,10 +328,8 @@ function restoreGameBoard() {
 	scissorsIcon.classList.remove("sizeOfIconOnChooseGame");
 	hostIcon.classList.remove("sizeOfIconOnChooseGame");
 
-	playerBoard.appendChild(rockIcon);
-	playerBoard.appendChild(paperIcon);
-	playerBoard.appendChild(scissorsIcon);
-	hostBoard.appendChild(hostIcon);
+	createPlayerBoardGame();
+	createHostBoardGame();
 }
 
 function resetTheGame() {
