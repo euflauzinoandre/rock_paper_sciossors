@@ -173,7 +173,7 @@ function createHostBoardGame() {
 	const hostBoard = document.querySelector("#hostBoard");
 
 	hostIcon = document.createElement("img");
-	hostIcon.setAttribute("src", "../images/icons/host.png");
+	hostIcon.setAttribute("src", "./images/icons/host.png");
 	hostIcon.setAttribute("alt", "HostIcon");
 	hostIcon.setAttribute("title", "Host");
 	hostBoard.appendChild(hostIcon);
