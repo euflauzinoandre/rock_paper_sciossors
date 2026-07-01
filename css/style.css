@@ -328,7 +328,7 @@ img,
 	position: absolute;
 	background-color: #2b2a33e7;
 	border-radius: 10px;
-	min-width: 700px;
+	width: 700px;
 	padding: 30px;
 	top: 50%; /* Move o canto superior esquerdo da div para 50% da altura da referência (normalmente a viewport ou o elemento pai posicionado). */
 	left: 50%; /* Move o canto superior esquerdo da div para 50% da largura.*/
@@ -336,6 +336,17 @@ img,
 		-50%,
 		-50%
 	); /* 50% da sua largura para a esquerda. 50% da sua altura para cima. Importante: aqui os % são calculados sobre o tamanho da própria div, não da tela. */
+}
+
+@media only screen and (max-width: 600px) {
+	.messageBoard {
+		max-width: 300px;
+		font-size: 20px;
+		text-justify: inter-word;
+		hyphens: auto;
+		word-break: break-word;
+		text-align: justify;
+	}
 }
 
 .titleMessageBoard {
@@ -371,10 +382,23 @@ img,
 	font-weight: bolder;
 	font-size: 20px;
 	align-items: center;
+	text-align: center;
+	justify-content: center;
 	padding: 10px;
 	margin: auto;
 	color: white;
 	background-image: var(--background-body);
 	border-radius: 5px;
 	border-color: white;
+}
+
+@media only screen and (max-width: 600px) {
+	.buttonMessageBoard {
+		min-width: 90px;
+		min-height: 10px;
+		max-height: 60px;
+		font-size: 13px;
+		padding: 2px;
+		margin: 0px;
+	}
 }
