@@ -367,6 +367,13 @@ img,
 	padding: 20px;
 }
 
+@media only screen and (max-width: 600px) {
+	.textMessageBoard {
+		font-size: 15px;
+		max-width: 250px;
+	}
+}
+
 .defaultButtons {
 	display: flex;
 	flex: 1;
