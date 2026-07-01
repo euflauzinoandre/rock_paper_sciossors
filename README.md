@@ -4,7 +4,7 @@ A browser-based Rock, Paper, Scissors game built with HTML, CSS, and JavaScript.
 
 ## Live Demo
 
-🔗 [Play Here](https://euflauzinoandre.github.io/rock_paper_sciossors/)
+🔗 [Play RPS](https://euflauzinoandre.github.io/rock_paper_sciossors/)
 
 ## Features
 
