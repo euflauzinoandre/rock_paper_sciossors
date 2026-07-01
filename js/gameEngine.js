@@ -1,9 +1,10 @@
 //Global Variables
 let playerName;
 let showWelcomeMessage;
-let difficultLevel;
+let playerMatchChoice;
 let roundNumber;
-let winner;
+let roundWinner;
+let gameWinner;
 
 let rockIcon;
 let paperIcon;
@@ -29,7 +30,7 @@ form.addEventListener("submit", (e) => {
 
 async function start() {
 	playerName = showMessage();
-	difficultLevel = await chooseOptionGame();
+	playerMatchChoice = await chooseOptionGame();
 	createBoardGame(playerName);
 	roundNumber = document.createElement("h2");
 	container.insertBefore(roundNumber, container.firstChild);
@@ -38,22 +39,21 @@ async function start() {
 
 async function playGame() {
 	welcomeMessageBoard.style.backgroundColor = "";
-	for (let i = 1; i <= difficultLevel; i++) {
+	for (let i = 1; i <= playerMatchChoice; i++) {
 		roundNumber.textContent = "Round " + i;
 		const playerOption = await getPlayerOption();
 		const hostOption = getHostOption();
 		await sleep(1000);
-		winner = playRound(hostOption, playerOption);
-		roundResultMessage(winner);
+		roundWinner = playRound(hostOption, playerOption);
+		roundResultMessage(roundWinner);
 		updateScore();
 		await sleep(2000);
-		if (i === difficultLevel) {
+		let scoreToWin = Math.floor(playerMatchChoice / 2 + 1);
+		if (i === playerMatchChoice) {
 			playAgain = await confirmToPlayAgain();
-			//updateLevel = confirmToUpdateLevel();
-			if (playAgain === "confirm") {
-				i = 1;
-				resetTheGame();
-			} else if (playAgain === "cancel") window.location.reload();
+			if (playAgain === "confirm") resetTheGame();
+			else if (playAgain === "cancel") window.location.reload();
+			else if (playAgain === "continue") playerMatchChoice += 2;
 		}
 		restoreGameBoard();
 	}
@@ -197,7 +197,7 @@ function getPlayerOption() {
 		scissorsIcon.addEventListener("click", () => {
 			paperIcon.remove();
 			rockIcon.remove();
-			paperIcon.classList.add("sizeOfIconOnChooseGame");
+			scissorsIcon.classList.add("sizeOfIconOnChooseGame");
 			hostIcon.classList.add("sizeOfIconOnChooseGame");
 			resolve("scissors");
 		});
@@ -266,7 +266,7 @@ function playRound(hostOption, playerOption) {
 	}
 }
 
-async function roundResultMessage(winner) {
+async function roundResultMessage(roundWinner) {
 	const winnerIcon = document.createElement("img");
 	winnerIcon.setAttribute("src", "../images/icons/roundWinner.png");
 	winnerIcon.classList.add("resultIcon");
@@ -279,11 +279,11 @@ async function roundResultMessage(winner) {
 	tiePlayerIcon.setAttribute("src", "../images/icons/tiePlayer.png");
 	tiePlayerIcon.classList.add("resultIcon");
 
-	if (winner === "Host")
+	if (roundWinner === "Host")
 		document.querySelector("#hostBoard").appendChild(winnerIcon);
-	else if (winner === playerName)
+	else if (roundWinner === playerName)
 		document.querySelector("#playerBoard").appendChild(winnerIcon);
-	else if (winner === "Tie") {
+	else if (roundWinner === "Tie") {
 		document.querySelector("#hostBoard").appendChild(tieHostIcon);
 		document.querySelector("#playerBoard").appendChild(tiePlayerIcon);
 	}
@@ -334,12 +334,17 @@ function confirmToPlayAgain() {
 	playAgainMessageBoard.classList.add("messageBoard");
 	playAgainBackground.appendChild(playAgainMessageBoard);
 
+	if (hostScore < playerScore) gameWinner = playerName;
+	else if (hostScore > playerScore) gameWinner = "Host";
+	else if (hostScore === playerScore) gameWinner = "Tie";
+
 	const playAgainTitle = document.createElement("div");
 	playAgainTitle.classList.add("titleMessageBoard");
-	if (winner === playerName)
+	if (gameWinner === playerName)
 		playAgainTitle.textContent = "Congratulations. You Win!";
-	if (winner === "Host") playAgainTitle.textContent = "Sorry... Host Win!";
-	if (winner === "Tie") playAgainTitle.textContent = "It was a draw...";
+	if (gameWinner === "Host")
+		playAgainTitle.textContent = "Sorry... Host Win!";
+	if (gameWinner === "Tie") playAgainTitle.textContent = "It was a draw...";
 	playAgainMessageBoard.appendChild(playAgainTitle);
 
 	const playAgainMessage = document.createElement("div");
@@ -354,7 +359,7 @@ function confirmToPlayAgain() {
 
 	const playAgainButtonConfirm = document.createElement("button");
 	playAgainButtonConfirm.classList.add("buttonMessageBoard");
-	playAgainButtonConfirm.textContent = "Play";
+	playAgainButtonConfirm.textContent = "Play Again";
 	playAgainButtons.appendChild(playAgainButtonConfirm);
 
 	const playAgainButtonCancel = document.createElement("button");
@@ -366,8 +371,18 @@ function confirmToPlayAgain() {
 			playAgainBackground.remove();
 			resolve("confirm");
 		});
+		if (playerMatchChoice < 5) {
+			const playAgainButtonContinue = document.createElement("button");
+			playAgainButtonContinue.classList.add("buttonMessageBoard");
+			playAgainButtonContinue.textContent = "Continue";
+			playAgainButtons.appendChild(playAgainButtonContinue);
+			playAgainButtonContinue.addEventListener("click", () => {
+				playAgainBackground.remove();
+				resolve("continue");
+			});
+		}
 		playAgainButtonCancel.addEventListener("click", () => {
-			resolve("cancel");
+			window.location.reload();
 		});
 	});
 }
