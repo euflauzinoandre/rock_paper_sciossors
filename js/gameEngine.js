@@ -143,7 +143,7 @@ function createPlayerBoardGame() {
 	playerBoard.appendChild(rockIcon);
 
 	paperIcon = document.createElement("img");
-	paperIcon.setAttribute("src", "../images/icons/paper.png");
+	paperIcon.setAttribute("src", "./images/icons/paper.png");
 	paperIcon.setAttribute("alt", "PaperIcon");
 	paperIcon.setAttribute("title", "Paper");
 	paperIcon.classList.add("sizeOfIcon");
@@ -156,7 +156,7 @@ function createPlayerBoardGame() {
 	playerBoard.appendChild(paperIcon);
 
 	scissorsIcon = document.createElement("img");
-	scissorsIcon.setAttribute("src", "../images/icons/scissors.png");
+	scissorsIcon.setAttribute("src", "./images/icons/scissors.png");
 	scissorsIcon.setAttribute("alt", "ScissorsIcon");
 	scissorsIcon.setAttribute("title", "Scissors");
 	scissorsIcon.classList.add("sizeOfIcon");
@@ -286,15 +286,15 @@ function playRound(hostOption, playerOption) {
 
 async function roundResultMessage(roundWinner) {
 	const winnerIcon = document.createElement("img");
-	winnerIcon.setAttribute("src", "../images/icons/roundWinner.png");
+	winnerIcon.setAttribute("src", "./images/icons/roundWinner.png");
 	winnerIcon.classList.add("resultIcon");
 
 	const tieHostIcon = document.createElement("img");
-	tieHostIcon.setAttribute("src", "../images/icons/tieHost.png");
+	tieHostIcon.setAttribute("src", "./images/icons/tieHost.png");
 	tieHostIcon.classList.add("resultIcon");
 
 	const tiePlayerIcon = document.createElement("img");
-	tiePlayerIcon.setAttribute("src", "../images/icons/tiePlayer.png");
+	tiePlayerIcon.setAttribute("src", "./images/icons/tiePlayer.png");
 	tiePlayerIcon.classList.add("resultIcon");
 
 	if (roundWinner === "Host")
